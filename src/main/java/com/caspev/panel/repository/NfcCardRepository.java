@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface NfcCardRepository extends JpaRepository<NfcCard, Long> {
     Optional<NfcCard> findByUuid(String uuid);
+    Optional<NfcCard> findByCode(String code);
 }

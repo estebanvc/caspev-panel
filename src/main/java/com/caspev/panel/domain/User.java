@@ -63,6 +63,10 @@ public class User extends AuditingEntity implements Serializable {
     @Column(name = "lang_key", length = 6, nullable = false)
     private String langKey;
 
+    @NotNull
+    @Column(name = "level_access", nullable = false)
+    private Integer levelAccess;
+
     @JsonIgnore
     @ManyToMany(
             fetch = FetchType.LAZY,

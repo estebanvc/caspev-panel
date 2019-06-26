@@ -4,6 +4,7 @@ import com.caspev.panel.controller.errors.ResourceNotFoundException;
 import com.caspev.panel.domain.NfcCard;
 import com.caspev.panel.model.NfcCardModel;
 import com.caspev.panel.repository.NfcCardRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,7 @@ public class NfcCardController {
     @GetMapping("/nfc-cards")
     public String listNfcCards(Model model) {
 
-        List<NfcCard> nfcCardList = nfcCardRepository.findAll();
+        List<NfcCard> nfcCardList = nfcCardRepository.findAll(Sort.by("id").descending());
         model.addAttribute("nfcCardList", nfcCardList);
 
         return "nfc-card/list";
@@ -55,7 +56,6 @@ public class NfcCardController {
 
         return "nfc-card/form";
     }
-
 
     @GetMapping("/nfc-cards/{uuid}")
     public String showNfcCard(@PathVariable String uuid, Model model) {

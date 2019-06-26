@@ -34,4 +34,8 @@ public class Door implements Serializable {
     @Size(max = 255)
     @Column(name = "name", length = 255, nullable = false)
     private String name;
+
+    @NotNull
+    @Column(name = "level_access", nullable = false)
+    private Integer levelAccess;
 }
