@@ -24,9 +24,10 @@ public class Vehicle implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(min = 36, max = 36)
-    @Column(name = "uuid", length = 36, unique = true)
-    private String uuid = UUID.randomUUID().toString();
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
 
     @NotNull
     @Size(min = 6, max = 6)
@@ -37,4 +38,16 @@ public class Vehicle implements Serializable {
     @JsonIgnoreProperties("vehicles")
     private User user;
 
+    public Vehicle() {
+
+    }
+
+    public Vehicle(@NotNull @Size(min = 6, max = 6) String plate) {
+        this.plate = plate;
+    }
+
+    @PrePersist
+    public void generateUuid() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

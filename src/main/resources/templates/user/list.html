@@ -4,39 +4,43 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>NFC Cards</title>
+    <title>Usuarios</title>
 </head>
 <body>
 <section layout:fragment="content">
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
             <div class="text-right mb-3">
-                <a href="/nfc-cards/add" class="btn btn-primary" role="button"
+                <a href="/users/add" class="btn btn-primary" role="button"
                    aria-pressed="true">
                     <i class="fa fa-plus fa-fw"
                        aria-hidden="true"></i>
-                    <span>Añadir tarjeta</span>
+                    <span>Añadir usuario</span>
                 </a>
             </div>
-            <div  class="alert alert-warning" role="alert"
-                  th:if="${nfcCardDTOList.size() < 1}">
-                No se ha añadido ninguna tarjeta
-            </div>
-            <div class="table-responsive" th:if="${nfcCardDTOList.size() > 0}">
+            <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Código</th>
+                        <th>RUT</th>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nivel de acceso</th>
                         <th>Acción</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="nfcCardDTO : ${nfcCardDTOList}">
-                        <td th:text="${nfcCardDTO.getCode()}"></td>
+                    <tr th:each="user : ${userList}">
+                        <td th:text="${user.getRut()}"></td>
+                        <td th:text="${user.getEmail}"></td>
+                        <td th:text="${user.getFirstName()}"></td>
+                        <td th:text="${user.getLastName()}"></td>
+                        <td th:text="${user.getLevelAccess()}"></td>
                         <td>
                             <div class="row m-0 p-0">
                                 <div class="col-6">
-                                    <a th:href="${'/nfc-cards/' + nfcCardDTO.getUuid()}"
+                                    <a th:href="${'/nfc-cards/' + user.getUuid()}"
                                        class="btn btn-outline-primary" role="button"
                                        aria-pressed="true">
                                         <i class="fa fa-pencil-square-o fa-fw"
@@ -44,7 +48,8 @@
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <a th:href="${'/nfc-cards/' + nfcCardDTO.getUuid() + '/delete'}"
+                                    <a
+                                            th:href="${'/nfc-cards/' + user.getUuid() + '/delete'}"
                                        class="btn btn-outline-secondary" role="button"
                                        aria-pressed="true">
                                         <i class="fa fa-pencil-square-o fa-fw"
@@ -58,7 +63,6 @@
                 </table>
             </div>
         </div>
-    </div>
 </section>
 </body>
 </html>

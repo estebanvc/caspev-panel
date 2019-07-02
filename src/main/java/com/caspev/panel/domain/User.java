@@ -30,9 +30,10 @@ public class User extends AuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(min = 36, max = 36)
-    @Column(name = "uuid", length = 36, unique = true)
-    private String uuid = UUID.randomUUID().toString();
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
 
     @NotNull
     @Size(min = 8, max = 8)
@@ -57,11 +58,6 @@ public class User extends AuditingEntity implements Serializable {
     @Size(max = 50)
     @Column(name = "last_name", length = 50)
     private String lastName;
-
-    @NotNull
-    @Size(min = 2, max = 6)
-    @Column(name = "lang_key", length = 6, nullable = false)
-    private String langKey;
 
     @NotNull
     @Column(name = "level_access", nullable = false)
@@ -99,26 +95,42 @@ public class User extends AuditingEntity implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<Vehicle> vehicles = new HashSet<>();
 
-    /**
-     * Add a role
-     *
-     * @param role the role
-     * @return the persisted entity
-     */
+    @PrePersist
+    public void generateUuid() {
+        this.uuid = UUID.randomUUID().toString();
+    }
+
     public User addRole(Role role) {
         this.roles.add(role);
         return this;
     }
 
-    /**
-     * Remove a role
-     *
-     * @param role the role
-     * @return the persisted entity
-     */
     public User removeRole(Role role) {
         this.roles.remove(role);
         return this;
     }
 
+    public User addNfcCards(NfcCard nfcCard) {
+        this.nfcCards.add(nfcCard);
+        nfcCard.setUser(this);
+        return this;
+    }
+
+    public User removeNfcCards(NfcCard nfcCard) {
+        this.nfcCards.remove(nfcCard);
+        nfcCard.setUser(null);
+        return this;
+    }
+
+    public User addVehicles(Vehicle vehicle) {
+        this.vehicles.add(vehicle);
+        vehicle.setUser(this);
+        return this;
+    }
+
+    public User removeVehicles(Vehicle vehicle) {
+        this.vehicles.remove(vehicle);
+        vehicle.setUser(null);
+        return this;
+    }
 }

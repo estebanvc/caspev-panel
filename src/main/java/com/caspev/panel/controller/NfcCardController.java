@@ -1,10 +1,11 @@
 package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
-import com.caspev.panel.domain.NfcCard;
-import com.caspev.panel.model.NfcCardModel;
-import com.caspev.panel.repository.NfcCardRepository;
-import org.springframework.data.domain.Sort;
+import com.caspev.panel.service.NfcCardService;
+import com.caspev.panel.service.dto.NfcCardDTO;
+import com.caspev.panel.service.mapper.NfcCardMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,40 +18,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.util.List;
 
+
+/**
+ * Web controller for managing NfcCard.
+ */
 @Controller
 public class NfcCardController {
 
-    private final NfcCardRepository nfcCardRepository;
+    private final Logger log = LoggerFactory.getLogger(NfcCardController.class);
 
-    public NfcCardController(NfcCardRepository nfcCardRepository) {
-        this.nfcCardRepository = nfcCardRepository;
+    private final NfcCardService nfcCardService;
+
+    public NfcCardController(NfcCardService nfcCardService) {
+        this.nfcCardService = nfcCardService;
     }
 
     @GetMapping("/nfc-cards")
     public String listNfcCards(Model model) {
-
-        List<NfcCard> nfcCardList = nfcCardRepository.findAll(Sort.by("id").descending());
-        model.addAttribute("nfcCardList", nfcCardList);
-
+        log.debug("REST request to get all NfcCards");
+        List<NfcCardDTO> nfcCardDTOList = nfcCardService.findAll();
+        model.addAttribute("nfcCardDTOList", nfcCardDTOList);
         return "nfc-card/list";
     }
 
     @GetMapping("/nfc-cards/add")
-    public String addNfcCard(@ModelAttribute NfcCardModel nfcCardModel, Model model) {
+    public String createNfcCard(@ModelAttribute NfcCardDTO nfcCardDTO, Model model) {
         model.addAttribute("formAction", "/nfc-cards/add");
         return "nfc-card/form";
     }
 
     @PostMapping("/nfc-cards/add")
-    public String addNfcCard(@Valid @ModelAttribute NfcCardModel nfcCardModel,
-                             BindingResult bindingResult, Model model) {
-
+    public String createNfcCard(@Valid @ModelAttribute NfcCardDTO nfcCardDTO,
+                                BindingResult bindingResult, Model model) {
+        log.debug("REST request to save NfcCard : {}", nfcCardDTO);
         model.addAttribute("formAction", "/nfc-cards/add");
-
         if (!bindingResult.hasErrors()) {
-            NfcCard nfcCard = new NfcCard();
-            nfcCard.setCode(nfcCardModel.getCode());
-            if (nfcCardRepository.findByCode(nfcCardModel.getCode()).isPresent()) {
+            if (nfcCardService.findOneByCode(nfcCardDTO.getCode()).isPresent()) {
                 bindingResult.addError(
                         new FieldError(
                                 "nfcCardModel",
@@ -59,7 +62,7 @@ public class NfcCardController {
                         )
                 );
             } else {
-                nfcCardRepository.save(nfcCard);
+                nfcCardService.save(nfcCardDTO);
                 return "redirect:/nfc-cards";
             }
         }
@@ -68,26 +71,28 @@ public class NfcCardController {
     }
 
     @GetMapping("/nfc-cards/{uuid}")
-    public String showNfcCard(@PathVariable String uuid, Model model) {
-
+    public String getNfcCard(@PathVariable String uuid, Model model) {
+        log.debug("REST request to get NfcCard : {}", uuid);
         model.addAttribute("formAction", "/nfc-cards/" + uuid);
-        NfcCard nfcCard = nfcCardRepository.findByUuid(uuid).orElseThrow(ResourceNotFoundException::new);
-        model.addAttribute("nfcCardModel", nfcCard);
+        NfcCardDTO nfcCardDTO = nfcCardService.findOneByUuid(uuid)
+                .orElseThrow(ResourceNotFoundException::new);
+        model.addAttribute("nfcCardDTO", nfcCardDTO);
 
         return "nfc-card/form";
     }
 
     @PostMapping("/nfc-cards/{uuid}")
     public String updateNfcCard(@PathVariable String uuid,
-                                @Valid @ModelAttribute NfcCardModel nfcCardModel,
+                                @Valid @ModelAttribute NfcCardDTO nfcCardDTO,
                                 BindingResult bindingResult, Model model) {
-
+        log.debug("REST request to update NfcCard : {}", nfcCardDTO);
         model.addAttribute("formAction", "/nfc-cards/" + uuid);
 
         if (!bindingResult.hasErrors()) {
-            NfcCard nfcCard = nfcCardRepository.findByUuid(uuid).orElseThrow(ResourceNotFoundException::new);
-            nfcCard.setCode(nfcCardModel.getCode());
-            nfcCardRepository.save(nfcCard);
+            Long nfcCardId = nfcCardService.findOneByUuid(uuid)
+                    .orElseThrow(ResourceNotFoundException::new).getId();
+            nfcCardDTO.setId(nfcCardId);
+            nfcCardService.save(nfcCardDTO);
             model.addAttribute("recordUpdated", true);
         }
 
@@ -96,8 +101,9 @@ public class NfcCardController {
 
     @GetMapping("/nfc-cards/{uuid}/delete")
     public String deleteNfcCard(@PathVariable String uuid) {
-        nfcCardRepository.findByUuid(uuid).ifPresent(nfcCardRepository::delete);
+        log.debug("REST request to delete NfcCard : {}", uuid);
+        nfcCardService.findOneByUuid(uuid)
+                .ifPresent(nfcCardDTO -> nfcCardService.delete(nfcCardDTO.getUuid()));
         return "redirect:/nfc-cards";
     }
-
 }

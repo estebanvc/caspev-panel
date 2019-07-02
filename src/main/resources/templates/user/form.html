@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es"
+      layout:decorate="~{layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Usuario</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <div class="mx-auto pt-md-5 pt-3">
+            <form id="nfc-card" method="post" name="nfc-card"
+                  th:action="${formAction}"
+                  th:object="${userModel}">
+                <div class="alert alert-danger small"
+                     th:if="${#fields.hasErrors('*')}">
+                    <ul class="list-unstyled m-0">
+                        <li th:each="e : ${#fields.detailedErrors()}">
+                            <span class="font-weight-bolder"
+                                  th:text="#{${e.fieldName}}"></span>:
+                            <span th:text="${e.message} + '.'"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="alert alert-success" role="alert"
+                     th:if="${recordUpdated}">
+                    Registro actualizado con éxito.
+                </div>
+                <div class="form-group">
+                    <label for="rut">RUT</label>
+                    <input class="form-control" id="rut" name="rut" th:field="*{rut}"
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" id="email" name="email"
+                           th:field="*{email}"
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label for="firstName">Nombre</label>
+                    <input class="form-control" id="firstName" name="firstName"
+                           th:field="*{firstName}"
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Apellido</label>
+                    <input class="form-control" id="lastName" name="lastName"
+                           th:field="*{lastName}"
+                           type="text">
+                </div>
+                <div class="form-group">
+                    <label for="levelAccess">Nivel de acceso</label>
+                    <select class="form-control" id="levelAccess" name="levelAccess"
+                            th:field="*{levelAccess}">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Aceptar</button>
+                </div>
+            </form>
+        </div>
+</section>
+</body>
+</html>

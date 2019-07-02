@@ -27,9 +27,10 @@ public class EventLog implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(min = 36, max = 36)
-    @Column(name = "uuid", length = 36, unique = true)
-    private String uuid = UUID.randomUUID().toString();
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
 
     @NotNull
     @Column(name = "date", nullable = false)
@@ -46,4 +47,9 @@ public class EventLog implements Serializable {
 
     @ManyToOne
     private User user;
+
+    @PrePersist
+    public void generateUuid() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

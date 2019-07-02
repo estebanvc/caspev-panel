@@ -4,15 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>NFC Card</title>
+    <title>Vehículo</title>
 </head>
 <body>
 <section layout:fragment="content">
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
-            <form id="nfc-card" method="post" name="nfc-card"
+            <form id="vehicle" method="post" name="vehicle"
                   th:action="${formAction}"
-                  th:object="${nfcCardDTO}">
+                  th:object="${vehicleDTO}">
                 <div class="alert alert-danger small"
                      th:if="${#fields.hasErrors('*')}">
                     <ul class="list-unstyled m-0">
@@ -28,9 +28,9 @@
                     Registro actualizado con éxito.
                 </div>
                 <div class="form-group">
-                    <label for="code">Código</label>
-                    <input class="form-control" id="code" name="code" th:field="*{code}"
-                           type="text">
+                    <label for="plate">Patente</label>
+                    <input class="form-control" id="plate" name="plate"
+                           th:field="*{plate}" type="text">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit">Aceptar</button>

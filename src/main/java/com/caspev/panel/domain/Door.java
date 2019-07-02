@@ -26,9 +26,10 @@ public class Door implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(min = 36, max = 36)
-    @Column(name = "uuid", length = 36, unique = true)
-    private String uuid = UUID.randomUUID().toString();
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
 
     @NotNull
     @Size(max = 255)
@@ -38,4 +39,9 @@ public class Door implements Serializable {
     @NotNull
     @Column(name = "level_access", nullable = false)
     private Integer levelAccess;
+
+    @PrePersist
+    public void generateUuid() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

@@ -27,9 +27,10 @@ public class NfcCard implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Size(min = 36, max = 36)
-    @Column(name = "uuid", length = 36, unique = true)
-    private String uuid = UUID.randomUUID().toString();
+    @Column(name = "uuid", length = 36, nullable = false, unique = true)
+    private String uuid;
 
     @NotNull
     @Size(min = 11, max = 11)
@@ -39,4 +40,17 @@ public class NfcCard implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("nfcCards")
     private User user;
+
+    public NfcCard() {
+
+    }
+
+    public NfcCard(@NotNull @Size(min = 11, max = 11) String code) {
+        this.code = code;
+    }
+
+    @PrePersist
+    public void generateUuid() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 }
