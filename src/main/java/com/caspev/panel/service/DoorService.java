@@ -6,6 +6,7 @@ import com.caspev.panel.service.dto.DoorDTO;
 import com.caspev.panel.service.mapper.DoorMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,8 @@ public class DoorService {
     @Transactional(readOnly = true)
     public List<DoorDTO> findAll() {
         log.debug("Request to get all Doors");
-        return doorRepository.findAll().stream()
+        return doorRepository.findAll(Sort.by("id").descending())
+                .stream()
                 .map(doorMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }

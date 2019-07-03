@@ -24,7 +24,7 @@ public class DoorDTO implements Serializable {
     private String uuid;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 2, max = 255)
     private String name;
 
     @NotNull

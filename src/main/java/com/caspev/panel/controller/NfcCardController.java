@@ -35,7 +35,7 @@ public class NfcCardController {
 
     @GetMapping("/nfc-cards")
     public String listNfcCards(Model model) {
-        log.debug("REST request to get all NfcCards");
+        log.debug("GET request to get all NfcCards");
         List<NfcCardDTO> nfcCardDTOList = nfcCardService.findAll();
         model.addAttribute("nfcCardDTOList", nfcCardDTOList);
         return "nfc-card/list";
@@ -50,7 +50,7 @@ public class NfcCardController {
     @PostMapping("/nfc-cards/add")
     public String createNfcCard(@Valid @ModelAttribute NfcCardDTO nfcCardDTO,
                                 BindingResult bindingResult, Model model) {
-        log.debug("REST request to save NfcCard : {}", nfcCardDTO);
+        log.debug("POST request to save NfcCard : {}", nfcCardDTO);
         model.addAttribute("formAction", "/nfc-cards/add");
         if (!bindingResult.hasErrors()) {
             if (nfcCardService.findOneByCode(nfcCardDTO.getCode()).isPresent()) {
@@ -72,7 +72,7 @@ public class NfcCardController {
 
     @GetMapping("/nfc-cards/{uuid}")
     public String getNfcCard(@PathVariable String uuid, Model model) {
-        log.debug("REST request to get NfcCard : {}", uuid);
+        log.debug("GET request to get NfcCard : {}", uuid);
         model.addAttribute("formAction", "/nfc-cards/" + uuid);
         NfcCardDTO nfcCardDTO = nfcCardService.findOneByUuid(uuid)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -85,7 +85,7 @@ public class NfcCardController {
     public String updateNfcCard(@PathVariable String uuid,
                                 @Valid @ModelAttribute NfcCardDTO nfcCardDTO,
                                 BindingResult bindingResult, Model model) {
-        log.debug("REST request to update NfcCard : {}", nfcCardDTO);
+        log.debug("POST request to update NfcCard : {}", nfcCardDTO);
         model.addAttribute("formAction", "/nfc-cards/" + uuid);
 
         if (!bindingResult.hasErrors()) {
@@ -101,7 +101,7 @@ public class NfcCardController {
 
     @GetMapping("/nfc-cards/{uuid}/delete")
     public String deleteNfcCard(@PathVariable String uuid) {
-        log.debug("REST request to delete NfcCard : {}", uuid);
+        log.debug("GET request to delete NfcCard : {}", uuid);
         nfcCardService.findOneByUuid(uuid)
                 .ifPresent(nfcCardDTO -> nfcCardService.delete(nfcCardDTO.getUuid()));
         return "redirect:/nfc-cards";

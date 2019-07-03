@@ -6,6 +6,7 @@ import com.caspev.panel.service.dto.VehicleDTO;
 import com.caspev.panel.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,8 @@ public class VehicleService {
     @Transactional(readOnly = true)
     public List<VehicleDTO> findAll() {
         log.debug("Request to get all Vehicles");
-        return vehicleRepository.findAll().stream()
+        return vehicleRepository.findAll(Sort.by("id").descending())
+                .stream()
                 .map(vehicleMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }

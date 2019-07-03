@@ -4,15 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{nfcCard}"></title>
+    <title th:text="#{door}"></title>
 </head>
 <body>
 <section layout:fragment="content">
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
-            <form id="nfc-card" method="post" name="nfc-card"
+            <form id="door" method="post" name="door"
                   th:action="${formAction}"
-                  th:object="${nfcCardDTO}">
+                  th:object="${doorDTO}">
                 <div class="alert alert-danger small"
                      th:if="${#fields.hasErrors('*')}">
                     <ul class="list-unstyled m-0">
@@ -27,9 +27,19 @@
                      th:if="${recordUpdated}" th:text="#{recordUpdated}">
                 </div>
                 <div class="form-group">
-                    <label for="code" th:text="#{code}"></label>
-                    <input class="form-control" id="code" name="code" th:field="*{code}"
-                           type="text">
+                    <label for="name" th:text="#{name}"></label>
+                    <input class="form-control" id="name" name="name"
+                           th:field="*{name}" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="levelAccess" th:text="#{levelAccess}"></label>
+                    <select class="form-control" id="levelAccess" name="levelAccess"
+                            th:field="*{levelAccess}">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit" th:text="#{submit}"></button>

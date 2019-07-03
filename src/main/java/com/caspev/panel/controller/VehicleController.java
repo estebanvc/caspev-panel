@@ -33,7 +33,7 @@ public class VehicleController {
 
     @GetMapping("/vehicles")
     public String listVehicles(Model model) {
-        log.debug("REST request to get all Vehicles");
+        log.debug("GET request to get all Vehicles");
         List<VehicleDTO> vehicleDTOList = vehicleService.findAll();
         model.addAttribute("vehicleDTOList", vehicleDTOList);
         return "vehicle/list";
@@ -48,7 +48,7 @@ public class VehicleController {
     @PostMapping("/vehicles/add")
     public String createVehicle(@Valid @ModelAttribute VehicleDTO vehicleDTO,
                                 BindingResult bindingResult, Model model) {
-        log.debug("REST request to save Vehicle : {}", vehicleDTO);
+        log.debug("POST request to save Vehicle : {}", vehicleDTO);
         model.addAttribute("formAction", "/vehicles/add");
         if (!bindingResult.hasErrors()) {
             if (vehicleService.findOneByPlate(vehicleDTO.getPlate()).isPresent()) {
@@ -71,7 +71,7 @@ public class VehicleController {
 
     @GetMapping("/vehicles/{uuid}")
     public String getVehicle(@PathVariable String uuid, Model model) {
-        log.debug("REST request to get Vehicle : {}", uuid);
+        log.debug("GET request to get Vehicle : {}", uuid);
         model.addAttribute("formAction", "/vehicles/" + uuid);
         VehicleDTO vehicleDTO = vehicleService.findOneByUuid(uuid)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -84,7 +84,7 @@ public class VehicleController {
     public String updateVehicle(@PathVariable String uuid,
                                 @Valid @ModelAttribute VehicleDTO vehicleDTO,
                                 BindingResult bindingResult, Model model) {
-        log.debug("REST request to update Vehicle : {}", vehicleDTO);
+        log.debug("POST request to update Vehicle : {}", vehicleDTO);
         model.addAttribute("formAction", "/vehicles/" + uuid);
 
         if (!bindingResult.hasErrors()) {
@@ -100,7 +100,7 @@ public class VehicleController {
 
     @GetMapping("/vehicles/{uuid}/delete")
     public String deleteVehicle(@PathVariable String uuid) {
-        log.debug("REST request to delete Vehicle : {}", uuid);
+        log.debug("GET request to delete Vehicle : {}", uuid);
         vehicleService.findOneByUuid(uuid)
                 .ifPresent(vehicleDTO -> vehicleService.delete(vehicleDTO.getUuid()));
         return "redirect:/vehicles";

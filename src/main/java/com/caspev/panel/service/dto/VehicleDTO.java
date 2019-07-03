@@ -27,6 +27,5 @@ public class VehicleDTO implements Serializable {
     @Size(min = 6, max = 6)
     private String plate;
 
-
     private Long userId;
 }

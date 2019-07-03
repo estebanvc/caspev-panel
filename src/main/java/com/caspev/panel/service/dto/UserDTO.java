@@ -7,6 +7,8 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A DTO for the User entity.
@@ -31,10 +33,6 @@ public class UserDTO implements Serializable {
     @Size(min = 5, max = 255)
     private String email;
 
-    @NotNull
-    @Size(min = 60, max = 60)
-    private String password;
-
     @Size(max = 50)
     private String firstName;
 
@@ -43,4 +41,16 @@ public class UserDTO implements Serializable {
 
     @NotNull
     private Integer levelAccess;
+
+    private Set<String> roles = new HashSet<>();
+
+    public UserDTO addRole(String role) {
+        this.roles.add(role);
+        return this;
+    }
+
+    public UserDTO removeRole(String role) {
+        this.roles.remove(role);
+        return this;
+    }
 }

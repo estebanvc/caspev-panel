@@ -6,6 +6,7 @@ import com.caspev.panel.service.dto.NfcCardDTO;
 import com.caspev.panel.service.mapper.NfcCardMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +52,8 @@ public class NfcCardService {
     @Transactional(readOnly = true)
     public List<NfcCardDTO> findAll() {
         log.debug("Request to get all NfcCards");
-        return nfcCardRepository.findAll().stream()
+        return nfcCardRepository.findAll(Sort.by("id").descending())
+                .stream()
                 .map(nfcCardMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
