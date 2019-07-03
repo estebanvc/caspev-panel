@@ -1,10 +1,12 @@
 package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
+import com.caspev.panel.security.RolesConstants;
 import com.caspev.panel.service.DoorService;
 import com.caspev.panel.service.dto.DoorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import java.util.List;
 /**
  * Web controller for managing Door.
  */
+@Secured({RolesConstants.ADMIN})
 @Controller
 public class DoorController {
 

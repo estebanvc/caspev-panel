@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.css}">
+    <title th:text="#{appName}"></title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/" th:text="#{appName}"></a>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation" class="navbar-toggler"
+            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/event-logs">
+                    <i aria-hidden="true" class="fa fa-list fa-fw"></i>
+                    <span th:text="#{eventLogs}"></span>
+                </a>
+            </li>
+            <li class="nav-item dropdown active">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" href="#" id="usersDropdown" role="button">
+                    <i aria-hidden="true" class="fa fa-users fa-fw"></i>
+                    <span th:text="#{users}"></span>
+                </a>
+                <div aria-labelledby="usersDropdown" class="dropdown-menu">
+                    <a class="dropdown-item" href="/users">
+                        <i aria-hidden="true" class="fa fa-list fa-fw"></i>
+                        <span th:text="#{users}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/users/add">
+                        <i aria-hidden="true" class="fa fa-plus fa-fw"></i>
+                        <span th:text="#{addNew}"></span>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" href="#" id="vehiclesDropdown" role="button">
+                    <i aria-hidden="true" class="fa fa-truck fa-fw"></i>
+                    <span th:text="#{vehicles}"></span>
+                </a>
+                <div aria-labelledby="vehiclesDropdown" class="dropdown-menu">
+                    <a class="dropdown-item" href="/vehicles">
+                        <i aria-hidden="true" class="fa fa-list fa-fw"></i>
+                        <span th:text="#{vehicles}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/vehicles/add">
+                        <i aria-hidden="true" class="fa fa-plus fa-fw"></i>
+                        <span th:text="#{addNew}"></span>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" href="#" id="nfcCardsDropdown" role="button">
+                    <i aria-hidden="true" class="fa fa-wifi fa-fw"></i>
+                    <span th:text="#{nfcCards}"></span>
+                </a>
+                <div aria-labelledby="nfcCardsDropdown" class="dropdown-menu">
+                    <a class="dropdown-item" href="/nfc-cards">
+                        <i aria-hidden="true" class="fa fa-list fa-fw"></i>
+                        <span th:text="#{nfcCards}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/nfc-cards/add">
+                        <i aria-hidden="true" class="fa fa-plus fa-fw"></i>
+                        <span th:text="#{addNew}"></span>
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown active">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                   data-toggle="dropdown" href="#" id="doorsDropdown" role="button">
+                    <i aria-hidden="true" class="fa fa-key fa-fw"></i>
+                    <span th:text="#{doors}"></span>
+                </a>
+                <div aria-labelledby="doorsDropdown" class="dropdown-menu">
+                    <a class="dropdown-item" href="/doors">
+                        <i aria-hidden="true" class="fa fa-list fa-fw"></i>
+                        <span th:text="#{doors}"></span>
+                    </a>
+                    <a class="dropdown-item" href="/doors/add">
+                        <i aria-hidden="true" class="fa fa-plus fa-fw"></i>
+                        <span th:text="#{addNew}"></span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<section layout:fragment="content"></section>
+<footer class="text-center text-muted mt-5">
+    <span th:text="#{appName}"></span>
+    <span th:text="${#dates.year(#dates.createNow())}"></span>
+    <span th:text="#{allRightsReserved}"></span>.
+</footer>
+<script th:src="@{/assets/js/jquery-3.4.0.min.js}"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/js/popper.min.js}"></script>
+</body>
+</html>

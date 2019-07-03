@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es"
-      layout:decorate="~{layout}"
+      layout:decorate="~{admin/layout}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -10,6 +10,7 @@
 <section layout:fragment="content">
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
+            <h3 th:text="#{nfcCards}" class="text-muted mb-3"></h3>
             <div class="text-right mb-3">
                 <a aria-pressed="true" class="btn btn-primary" href="/nfc-cards/add"
                    role="button">
