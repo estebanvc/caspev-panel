@@ -60,15 +60,15 @@
                     </select>
                 </div>
                 <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" name="activated"
-                           id="activated"
-                           th:field="*{activated}">
+                    <input class="form-check-input" id="activated" name="activated"
+                           th:field="*{activated}"
+                           type="checkbox">
                     <label class="form-check-label" for="activated"
                            th:text="#{activated}"></label>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary" type="submit"
-                            th:text="#{submit}"></button>
+                    <button class="btn btn-primary" th:text="#{submit}"
+                            type="submit"></button>
                 </div>
             </form>
         </div>

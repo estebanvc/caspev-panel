@@ -28,12 +28,12 @@ public class EventLogDTO implements Serializable {
     private Instant date;
 
 
-    private Long vehicleId;
+    private VehicleDTO vehicle;
 
-    private Long ncfCardId;
+    private NfcCardDTO ncfCard;
 
-    private Long doorId;
+    private DoorDTO door;
 
-    private Long userId;
+    private UserDTO user;
 
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"
-      th:lang="${#locale.language}"
       layout:decorate="~{layout}"
+      th:lang="${#locale.language}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -33,10 +33,11 @@
                                     <span class="input-group-text"
                                           id="inputGroupPrependEmail">@</span>
                                 </div>
-                                <input class="form-control" id="email" name="email"
+                                <input aria-describedby="inputGroupPrependEmail"
+                                       class="form-control" id="email"
+                                       name="email"
                                        th:field="*{email}"
-                                       type="text"
-                                       aria-describedby="inputGroupPrependEmail">
+                                       type="text">
                             </div>
                         </div>
                         <div class="form-group">
@@ -45,13 +46,14 @@
                                 <div class="input-group-prepend">
                                 <span class="input-group-text"
                                       id="inputGroupPrependPassword">
-                                    <i class="fa fa-key" aria-hidden="true"></i>
+                                    <i aria-hidden="true" class="fa fa-key"></i>
                                 </span>
                                 </div>
-                                <input class="form-control" id="password" name="password"
+                                <input aria-describedby="inputGroupPrependPassword"
+                                       class="form-control" id="password"
+                                       name="password"
                                        th:field="*{password}"
-                                       type="password"
-                                       aria-describedby="inputGroupPrependPassword">
+                                       type="password">
                             </div>
                         </div>
                         <div class="form-row">

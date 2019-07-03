@@ -20,8 +20,7 @@ import javax.validation.Valid;
 @Controller
 public class AuthenticationController {
 
-    private final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
-
+    private final Logger      log = LoggerFactory.getLogger(AuthenticationController.class);
     private final UserService userService;
 
     public AuthenticationController(UserService userService) {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es"
+      layout:decorate="~{layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{eventLogs}"></title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <div class="mx-auto pt-md-5 pt-3">
+            <div class="alert alert-warning" role="alert"
+                 th:if="${eventLogDTOList.size() < 1}" th:text="#{noRecordFound}">
+            </div>
+            <div class="table-responsive" th:if="${eventLogDTOList.size() > 0}">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th th:text="#{date}"></th>
+                        <th th:text="#{vehicle}"></th>
+                        <th th:text="#{nfcCard}"></th>
+                        <th th:text="#{door}"></th>
+                        <th th:text="#{user}"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="eventLogDTO : ${eventLogDTOList}">
+                        <td th:text="${#dates.format(eventLogDTO.getDate(), 'dd-MM-yyyy HH:mm')}"></td>
+                        <td>
+                            <a th:href="'/vehicles/' + ${eventLogDTO.getVehicle().getUuid()}"
+                               th:text="${eventLogDTO.getVehicle().getPlate()}"></a>
+                        </td>
+                        <td>
+                            <a th:href="'/nfc-cards/' + ${eventLogDTO.getNcfCard().getUuid()}"
+                               th:text="${eventLogDTO.getNcfCard().getCode()}"></a>
+                        </td>
+                        <td>
+                            <a th:href="'/doors/' + ${eventLogDTO.getDoor().getUuid()}"
+                               th:text="${eventLogDTO.getDoor().getName()}"></a>
+                        </td>
+                        <td>
+                            <a th:href="'/users/' + ${eventLogDTO.getUser().getUuid()}"
+                               th:text="${eventLogDTO.getUser().getRut()}"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

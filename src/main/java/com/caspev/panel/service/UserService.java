@@ -25,15 +25,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserService {
 
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
-
+    private final Logger          log = LoggerFactory.getLogger(UserService.class);
     private final PasswordEncoder passwordEncoder;
-
-    private final RoleRepository roleRepository;
-
-    private final UserMapper userMapper;
-
-    private final UserRepository userRepository;
+    private final RoleRepository  roleRepository;
+    private final UserMapper      userMapper;
+    private final UserRepository  userRepository;
 
     public UserService(PasswordEncoder passwordEncoder, RoleRepository roleRepository,
                        UserMapper userMapper, UserRepository userRepository) {

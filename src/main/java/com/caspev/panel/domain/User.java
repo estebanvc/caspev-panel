@@ -113,25 +113,25 @@ public class User extends AuditingEntity implements Serializable {
         return this;
     }
 
-    public User addNfcCards(NfcCard nfcCard) {
+    public User addNfcCard(NfcCard nfcCard) {
         this.nfcCards.add(nfcCard);
         nfcCard.setUser(this);
         return this;
     }
 
-    public User removeNfcCards(NfcCard nfcCard) {
+    public User removeNfcCard(NfcCard nfcCard) {
         this.nfcCards.remove(nfcCard);
         nfcCard.setUser(null);
         return this;
     }
 
-    public User addVehicles(Vehicle vehicle) {
+    public User addVehicle(Vehicle vehicle) {
         this.vehicles.add(vehicle);
         vehicle.setUser(this);
         return this;
     }
 
-    public User removeVehicles(Vehicle vehicle) {
+    public User removeVehicle(Vehicle vehicle) {
         this.vehicles.remove(vehicle);
         vehicle.setUser(null);
         return this;

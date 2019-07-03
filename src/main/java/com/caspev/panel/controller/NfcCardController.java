@@ -24,8 +24,7 @@ import java.util.List;
 @Controller
 public class NfcCardController {
 
-    private final Logger log = LoggerFactory.getLogger(NfcCardController.class);
-
+    private final Logger         log = LoggerFactory.getLogger(NfcCardController.class);
     private final NfcCardService nfcCardService;
 
     public NfcCardController(NfcCardService nfcCardService) {

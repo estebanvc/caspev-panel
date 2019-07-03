@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"
-      th:lang="${#locale.language}"
       layout:decorate="~{layout}"
+      th:lang="${#locale.language}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,10 +13,12 @@
         <div class="mx-auto pt-md-5 pt-3">
             <div class="jumbotron text-center">
                 <h1>
-                    <i class="fa fa-check-circle fa-3x text-success" aria-hidden="true"></i><br>
+                    <i aria-hidden="true"
+                       class="fa fa-check-circle fa-3x text-success"></i><br>
                     <span th:text="#{yourAccountHasBeenCreatedSuccessfully}"></span>
                 </h1>
-                <a class="btn btn-primary btn-lg" href="/login" role="button" th:text="#{goToLoginPage}"></a>
+                <a class="btn btn-primary btn-lg" href="/login" role="button"
+                   th:text="#{goToLoginPage}"></a>
             </div>
         </div>
     </div>

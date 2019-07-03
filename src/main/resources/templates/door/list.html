@@ -11,15 +11,15 @@
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
             <div class="text-right mb-3">
-                <a href="/doors/add" class="btn btn-primary" role="button"
-                   aria-pressed="true">
-                    <i class="fa fa-plus fa-fw"
-                       aria-hidden="true"></i>
+                <a aria-pressed="true" class="btn btn-primary" href="/doors/add"
+                   role="button">
+                    <i aria-hidden="true"
+                       class="fa fa-plus fa-fw"></i>
                     <span th:text="#{addNew}"></span>
                 </a>
             </div>
             <div class="alert alert-warning" role="alert"
-                  th:if="${doorDTOList.size() < 1}" th:text="#{noRecordFound}">
+                 th:if="${doorDTOList.size() < 1}" th:text="#{noRecordFound}">
             </div>
             <div class="table-responsive" th:if="${doorDTOList.size() > 0}">
                 <table class="table table-striped">

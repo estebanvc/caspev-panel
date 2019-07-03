@@ -23,8 +23,7 @@ import java.util.List;
 @Controller
 public class VehicleController {
 
-    private final Logger log = LoggerFactory.getLogger(VehicleController.class);
-
+    private final Logger         log = LoggerFactory.getLogger(VehicleController.class);
     private final VehicleService vehicleService;
 
     public VehicleController(VehicleService vehicleService) {

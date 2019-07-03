@@ -18,7 +18,7 @@ import org.mapstruct.Mapping;
         })
 public interface EventLogMapper extends EntityMapper<EventLogDTO, EventLog> {
 
-    @Mapping(source = "vehicle.id", target = "vehicleId")
+    /*@Mapping(source = "vehicle.id", target = "vehicleId")
     @Mapping(source = "ncfCard.id", target = "ncfCardId")
     @Mapping(source = "door.id", target = "doorId")
     @Mapping(source = "user.id", target = "userId")
@@ -28,7 +28,7 @@ public interface EventLogMapper extends EntityMapper<EventLogDTO, EventLog> {
     @Mapping(source = "ncfCardId", target = "ncfCard")
     @Mapping(source = "doorId", target = "door")
     @Mapping(source = "userId", target = "user")
-    EventLog toEntity(EventLogDTO eventLogDTO);
+    EventLog toEntity(EventLogDTO eventLogDTO);*/
 
     default EventLog fromId(Long id) {
         if (id == null) {

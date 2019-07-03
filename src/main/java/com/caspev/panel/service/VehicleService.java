@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class VehicleService {
 
-    private final Logger log = LoggerFactory.getLogger(VehicleService.class);
-    private final VehicleMapper vehicleMapper;
+    private final Logger            log = LoggerFactory.getLogger(VehicleService.class);
+    private final VehicleMapper     vehicleMapper;
     private final VehicleRepository vehicleRepository;
 
     public VehicleService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper) {

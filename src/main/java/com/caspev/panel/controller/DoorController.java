@@ -23,7 +23,7 @@ import java.util.List;
 public class DoorController {
 
     private final DoorService doorService;
-    private final Logger log = LoggerFactory.getLogger(DoorController.class);
+    private final Logger      log = LoggerFactory.getLogger(DoorController.class);
 
     public DoorController(DoorService doorService) {
         this.doorService = doorService;

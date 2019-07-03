@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class DoorService {
 
-    private final DoorMapper doorMapper;
+    private final DoorMapper     doorMapper;
     private final DoorRepository doorRepository;
-    private final Logger log = LoggerFactory.getLogger(DoorService.class);
+    private final Logger         log = LoggerFactory.getLogger(DoorService.class);
 
     public DoorService(DoorRepository doorRepository, DoorMapper doorMapper) {
         this.doorRepository = doorRepository;
