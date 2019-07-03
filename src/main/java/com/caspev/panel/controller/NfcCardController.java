@@ -2,7 +2,10 @@ package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
 import com.caspev.panel.service.NfcCardService;
+import com.caspev.panel.service.UserService;
 import com.caspev.panel.service.dto.NfcCardDTO;
+import com.caspev.panel.service.dto.NfcCardEagerDTO;
+import com.caspev.panel.service.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,16 +29,24 @@ public class NfcCardController {
 
     private final Logger         log = LoggerFactory.getLogger(NfcCardController.class);
     private final NfcCardService nfcCardService;
+    private final UserService    userService;
 
-    public NfcCardController(NfcCardService nfcCardService) {
+    public NfcCardController(NfcCardService nfcCardService, UserService userService) {
         this.nfcCardService = nfcCardService;
+        this.userService    = userService;
+    }
+
+    @ModelAttribute
+    public void getAllUsers(Model model) {
+        List<UserDTO> userDTOList = userService.findAll();
+        model.addAttribute("userDTOList", userDTOList);
     }
 
     @GetMapping("/nfc-cards")
     public String listNfcCards(Model model) {
         log.debug("GET request to get all NfcCards");
-        List<NfcCardDTO> nfcCardDTOList = nfcCardService.findAll();
-        model.addAttribute("nfcCardDTOList", nfcCardDTOList);
+        List<NfcCardEagerDTO> nfcCardEagerDTOList = nfcCardService.findAllEager();
+        model.addAttribute("nfcCardEagerDTOList", nfcCardEagerDTOList);
         return "nfc-card/list";
     }
 

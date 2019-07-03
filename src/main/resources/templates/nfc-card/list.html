@@ -19,26 +19,32 @@
                 </a>
             </div>
             <div class="alert alert-warning" role="alert"
-                 th:if="${nfcCardDTOList.size() < 1}" th:text="#{noRecordFound}">
+                 th:if="${nfcCardEagerDTOList.size() < 1}" th:text="#{noRecordFound}">
             </div>
-            <div class="table-responsive" th:if="${nfcCardDTOList.size() > 0}">
+            <div class="table-responsive" th:if="${nfcCardEagerDTOList.size() > 0}">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th th:text="#{code}"></th>
+                        <th th:text="#{user}"></th>
                         <th th:text="#{action}"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="nfcCardDTO : ${nfcCardDTOList}">
-                        <td th:text="${nfcCardDTO.getCode()}"></td>
+                    <tr th:each="nfcCardEagerDTO : ${nfcCardEagerDTOList}">
+                        <td th:text="${nfcCardEagerDTO.getCode()}"></td>
+                        <td>
+                            <a th:if="${nfcCardEagerDTO.getUser() != null}"
+                               th:href="${'/users/' + nfcCardEagerDTO.getUser().getUuid()}"
+                               th:text="${nfcCardEagerDTO.getUser().getRut()}"></a>
+                        </td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a class="btn btn-secondary"
-                                   th:href="${'/nfc-cards/' + nfcCardDTO.getUuid()}"
+                                   th:href="${'/nfc-cards/' + nfcCardEagerDTO.getUuid()}"
                                    th:text="#{viewDetails}"></a>
                                 <a class="btn btn-warning"
-                                   th:href="${'/nfc-cards/' + nfcCardDTO.getUuid() + '/delete'}"
+                                   th:href="${'/nfc-cards/' + nfcCardEagerDTO.getUuid() + '/delete'}"
                                    th:text="#{delete}"></a>
                             </div>
                         </td>

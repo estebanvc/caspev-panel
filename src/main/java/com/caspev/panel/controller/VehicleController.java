@@ -1,8 +1,11 @@
 package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
+import com.caspev.panel.service.UserService;
 import com.caspev.panel.service.VehicleService;
+import com.caspev.panel.service.dto.UserDTO;
 import com.caspev.panel.service.dto.VehicleDTO;
+import com.caspev.panel.service.dto.VehicleEagerDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,17 +27,25 @@ import java.util.List;
 public class VehicleController {
 
     private final Logger         log = LoggerFactory.getLogger(VehicleController.class);
+    private final UserService    userService;
     private final VehicleService vehicleService;
 
-    public VehicleController(VehicleService vehicleService) {
+    public VehicleController(UserService userService, VehicleService vehicleService) {
+        this.userService    = userService;
         this.vehicleService = vehicleService;
+    }
+
+    @ModelAttribute
+    public void getAllUsers(Model model) {
+        List<UserDTO> userDTOList = userService.findAll();
+        model.addAttribute("userDTOList", userDTOList);
     }
 
     @GetMapping("/vehicles")
     public String listVehicles(Model model) {
         log.debug("GET request to get all Vehicles");
-        List<VehicleDTO> vehicleDTOList = vehicleService.findAll();
-        model.addAttribute("vehicleDTOList", vehicleDTOList);
+        List<VehicleEagerDTO> vehicleEagerDTOList = vehicleService.findAllEager();
+        model.addAttribute("vehicleEagerDTOList", vehicleEagerDTOList);
         return "vehicle/list";
     }
 

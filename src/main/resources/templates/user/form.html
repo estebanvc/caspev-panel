@@ -10,67 +10,105 @@
 <section layout:fragment="content">
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
-            <form id="user" method="post" name="user"
-                  th:action="${formAction}"
-                  th:object="${userDTO}">
-                <div class="alert alert-danger small"
-                     th:if="${#fields.hasErrors('*')}">
-                    <ul class="list-unstyled m-0">
-                        <li th:each="e : ${#fields.detailedErrors()}">
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <form id="user" method="post" name="user"
+                          th:action="${formAction}"
+                          th:object="${userDTO}">
+                        <div class="alert alert-danger small"
+                             th:if="${#fields.hasErrors('*')}">
+                            <ul class="list-unstyled m-0">
+                                <li th:each="e : ${#fields.detailedErrors()}">
                             <span class="font-weight-bolder"
                                   th:text="#{${e.fieldName}}"></span>:
-                            <span th:text="${e.message} + '.'"></span>
-                        </li>
-                    </ul>
+                                    <span th:text="${e.message} + '.'"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="alert alert-success" role="alert"
+                             th:if="${recordUpdated}" th:text="#{recordUpdated}">
+                        </div>
+                        <div class="form-group">
+                            <label for="rut" th:text="#{rut}"></label>
+                            <input class="form-control" id="rut" name="rut" th:field="*{rut}"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" th:text="#{email}"></label>
+                            <input class="form-control" id="email" name="email"
+                                   th:field="*{email}"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName" th:text="#{firstName}"></label>
+                            <input class="form-control" id="firstName" name="firstName"
+                                   th:field="*{firstName}"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" th:text="#{lastName}"></label>
+                            <input class="form-control" id="lastName" name="lastName"
+                                   th:field="*{lastName}"
+                                   type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="levelAccess" th:text="#{levelAccess}"></label>
+                            <select class="form-control" id="levelAccess" name="levelAccess"
+                                    th:field="*{levelAccess}">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-check">
+                            <input class="form-check-input" id="activated" name="activated"
+                                   th:field="*{activated}"
+                                   type="checkbox">
+                            <label class="form-check-label" for="activated"
+                                   th:text="#{activated}"></label>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" th:text="#{submit}"
+                                    type="submit"></button>
+                        </div>
+                    </form>
                 </div>
-                <div class="alert alert-success" role="alert"
-                     th:if="${recordUpdated}" th:text="#{recordUpdated}">
+                <div class="col-sm-6">
+                    <div class="card" th:if="${vehicleDTOList != null}">
+                        <div class="card-header">
+                            <a href="/vehicles" th:text="#{vehicles}"></a>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush"
+                                th:if="${vehicleDTOList.size() > 0}">
+                                <li class="list-group-item"
+                                    th:each="vehicleDTO : ${vehicleDTOList}">
+                                    <a th:href="${'/vehicles/' + vehicleDTO.getUuid()}"
+                                       th:text="${vehicleDTO.getPlate()}"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card mt-3" th:if="${nfcCardDTOList != null}">
+                        <div class="card-header">
+                            <a href="/nfc-cards" th:text="#{nfcCards}"></a>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush"
+                                th:if="${nfcCardDTOList.size() > 0}">
+                                <li class="list-group-item"
+                                    th:each="nfcCardDTO : ${nfcCardDTOList}">
+                                    <a th:href="${'/nfc-cards/' + nfcCardDTO.getUuid()}"
+                                       th:text="${nfcCardDTO.getCode()}"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    <label for="rut" th:text="#{rut}"></label>
-                    <input class="form-control" id="rut" name="rut" th:field="*{rut}"
-                           type="text">
-                </div>
-                <div class="form-group">
-                    <label for="email" th:text="#{email}"></label>
-                    <input class="form-control" id="email" name="email"
-                           th:field="*{email}"
-                           type="text">
-                </div>
-                <div class="form-group">
-                    <label for="firstName" th:text="#{firstName}"></label>
-                    <input class="form-control" id="firstName" name="firstName"
-                           th:field="*{firstName}"
-                           type="text">
-                </div>
-                <div class="form-group">
-                    <label for="lastName" th:text="#{lastName}"></label>
-                    <input class="form-control" id="lastName" name="lastName"
-                           th:field="*{lastName}"
-                           type="text">
-                </div>
-                <div class="form-group">
-                    <label for="levelAccess" th:text="#{levelAccess}"></label>
-                    <select class="form-control" id="levelAccess" name="levelAccess"
-                            th:field="*{levelAccess}">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div class="form-group form-check">
-                    <input class="form-check-input" id="activated" name="activated"
-                           th:field="*{activated}"
-                           type="checkbox">
-                    <label class="form-check-label" for="activated"
-                           th:text="#{activated}"></label>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" th:text="#{submit}"
-                            type="submit"></button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>

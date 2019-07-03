@@ -19,26 +19,32 @@
                 </a>
             </div>
             <div class="alert alert-warning" role="alert"
-                 th:if="${vehicleDTOList.size() < 1}" th:text="#{noRecordFound}">
+                 th:if="${vehicleEagerDTOList.size() < 1}" th:text="#{noRecordFound}">
             </div>
-            <div class="table-responsive" th:if="${vehicleDTOList.size() > 0}">
+            <div class="table-responsive" th:if="${vehicleEagerDTOList.size() > 0}">
                 <table class="table table-striped">
                     <thead>
                     <tr>
                         <th th:text="#{plate}"></th>
+                        <th th:text="#{user}"></th>
                         <th th:text="#{action}"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="vehicleDTO : ${vehicleDTOList}">
-                        <td th:text="${vehicleDTO.getPlate()}"></td>
+                    <tr th:each="vehicleEagerDTO : ${vehicleEagerDTOList}">
+                        <td th:text="${vehicleEagerDTO.getPlate()}"></td>
+                        <td>
+                            <a th:if="${vehicleEagerDTO.getUser() != null}"
+                               th:href="${'/users/' + vehicleEagerDTO.getUser().getUuid()}"
+                               th:text="${vehicleEagerDTO.getUser().getRut()}"></a>
+                        </td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a class="btn btn-secondary"
-                                   th:href="${'/vehicles/' + vehicleDTO.getUuid()}"
+                                   th:href="${'/vehicles/' + vehicleEagerDTO.getUuid()}"
                                    th:text="#{viewDetails}"></a>
                                 <a class="btn btn-warning"
-                                   th:href="${'/vehicles/' + vehicleDTO.getUuid() + '/delete'}"
+                                   th:href="${'/vehicles/' + vehicleEagerDTO.getUuid() + '/delete'}"
                                    th:text="#{delete}"></a>
                             </div>
                         </td>

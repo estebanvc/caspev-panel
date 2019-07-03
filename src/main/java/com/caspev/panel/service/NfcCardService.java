@@ -3,6 +3,8 @@ package com.caspev.panel.service;
 import com.caspev.panel.domain.NfcCard;
 import com.caspev.panel.repository.NfcCardRepository;
 import com.caspev.panel.service.dto.NfcCardDTO;
+import com.caspev.panel.service.dto.NfcCardEagerDTO;
+import com.caspev.panel.service.mapper.NfcCardEagerMapper;
 import com.caspev.panel.service.mapper.NfcCardMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +24,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class NfcCardService {
 
-    private final Logger            log = LoggerFactory.getLogger(NfcCardService.class);
-    private final NfcCardMapper     nfcCardMapper;
-    private final NfcCardRepository nfcCardRepository;
+    private final Logger             log = LoggerFactory.getLogger(NfcCardService.class);
+    private final NfcCardEagerMapper nfcCardEagerMapper;
+    private final NfcCardMapper      nfcCardMapper;
+    private final NfcCardRepository  nfcCardRepository;
 
-    public NfcCardService(NfcCardRepository nfcCardRepository, NfcCardMapper nfcCardMapper) {
-        this.nfcCardRepository = nfcCardRepository;
-        this.nfcCardMapper     = nfcCardMapper;
+    public NfcCardService(NfcCardEagerMapper nfcCardEagerMapper, NfcCardMapper nfcCardMapper,
+                          NfcCardRepository nfcCardRepository) {
+        this.nfcCardEagerMapper = nfcCardEagerMapper;
+        this.nfcCardMapper      = nfcCardMapper;
+        this.nfcCardRepository  = nfcCardRepository;
     }
 
     /**
@@ -45,6 +50,21 @@ public class NfcCardService {
     }
 
     /**
+     * Get all the nfcCards by User id.
+     *
+     * @param id the user id
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<NfcCardDTO> findAllByUserId(Long id) {
+        log.debug("Request to get all NfcCards for User : {}", id);
+        return nfcCardRepository.findAllByUser_Id(id)
+                .stream()
+                .map(nfcCardMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      * Get all the nfcCards.
      *
      * @return the list of entities
@@ -55,6 +75,20 @@ public class NfcCardService {
         return nfcCardRepository.findAll(Sort.by("id").descending())
                 .stream()
                 .map(nfcCardMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get all the nfcCards with all its relationships.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<NfcCardEagerDTO> findAllEager() {
+        log.debug("Request to get all NfcCards");
+        return nfcCardRepository.findAll(Sort.by("id").descending())
+                .stream()
+                .map(nfcCardEagerMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 

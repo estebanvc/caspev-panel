@@ -2,8 +2,12 @@ package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
 import com.caspev.panel.security.RolesConstants;
+import com.caspev.panel.service.NfcCardService;
 import com.caspev.panel.service.UserService;
+import com.caspev.panel.service.VehicleService;
+import com.caspev.panel.service.dto.NfcCardDTO;
 import com.caspev.panel.service.dto.UserDTO;
+import com.caspev.panel.service.dto.VehicleDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,11 +28,16 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private final Logger      log = LoggerFactory.getLogger(UserController.class);
-    private final UserService userService;
+    private final Logger         log = LoggerFactory.getLogger(UserController.class);
+    private final NfcCardService nfcCardService;
+    private final UserService    userService;
+    private final VehicleService vehicleService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(NfcCardService nfcCardService, UserService userService,
+                          VehicleService vehicleService) {
+        this.nfcCardService = nfcCardService;
+        this.userService    = userService;
+        this.vehicleService = vehicleService;
     }
 
     @GetMapping("/users")
@@ -86,6 +95,12 @@ public class UserController {
                 .orElseThrow(ResourceNotFoundException::new);
         model.addAttribute("userDTO", userDTO);
 
+        List<VehicleDTO> vehicleDTOList = vehicleService.findAllByUserId(userDTO.getId());
+        List<NfcCardDTO> nfcCardDTOList = nfcCardService.findAllByUserId(userDTO.getId());
+
+        model.addAttribute("vehicleDTOList", vehicleDTOList);
+        model.addAttribute("nfcCardDTOList", nfcCardDTOList);
+
         return "user/form";
     }
 
@@ -102,6 +117,12 @@ public class UserController {
             userDTO.setId(userId);
             userService.save(userDTO);
             model.addAttribute("recordUpdated", true);
+
+            List<VehicleDTO> vehicleDTOList = vehicleService.findAllByUserId(userDTO.getId());
+            List<NfcCardDTO> nfcCardDTOList = nfcCardService.findAllByUserId(userDTO.getId());
+
+            model.addAttribute("vehicleDTOList", vehicleDTOList);
+            model.addAttribute("nfcCardDTOList", nfcCardDTOList);
         }
 
         return "user/form";

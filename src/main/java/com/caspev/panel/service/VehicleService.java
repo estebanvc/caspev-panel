@@ -3,6 +3,8 @@ package com.caspev.panel.service;
 import com.caspev.panel.domain.Vehicle;
 import com.caspev.panel.repository.VehicleRepository;
 import com.caspev.panel.service.dto.VehicleDTO;
+import com.caspev.panel.service.dto.VehicleEagerDTO;
+import com.caspev.panel.service.mapper.VehicleEagerMapper;
 import com.caspev.panel.service.mapper.VehicleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +24,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class VehicleService {
 
-    private final Logger            log = LoggerFactory.getLogger(VehicleService.class);
-    private final VehicleMapper     vehicleMapper;
-    private final VehicleRepository vehicleRepository;
+    private final Logger             log = LoggerFactory.getLogger(VehicleService.class);
+    private final VehicleEagerMapper vehicleEagerMapper;
+    private final VehicleMapper      vehicleMapper;
+    private final VehicleRepository  vehicleRepository;
 
-    public VehicleService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper) {
-        this.vehicleRepository = vehicleRepository;
-        this.vehicleMapper     = vehicleMapper;
+    public VehicleService(VehicleEagerMapper vehicleEagerMapper, VehicleMapper vehicleMapper,
+                          VehicleRepository vehicleRepository) {
+        this.vehicleEagerMapper = vehicleEagerMapper;
+        this.vehicleMapper      = vehicleMapper;
+        this.vehicleRepository  = vehicleRepository;
     }
 
     /**
@@ -45,6 +50,21 @@ public class VehicleService {
     }
 
     /**
+     * Get all the vehicles by User id.
+     *
+     * @param id the user id
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<VehicleDTO> findAllByUserId(Long id) {
+        log.debug("Request to get all Vehicles for User : {}", id);
+        return vehicleRepository.findAllByUser_Id(id)
+                .stream()
+                .map(vehicleMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      * Get all the vehicles.
      *
      * @return the list of entities
@@ -55,6 +75,20 @@ public class VehicleService {
         return vehicleRepository.findAll(Sort.by("id").descending())
                 .stream()
                 .map(vehicleMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get all the vehicles with all its relationships.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<VehicleEagerDTO> findAllEager() {
+        log.debug("Request to get all Vehicles");
+        return vehicleRepository.findAll(Sort.by("id").descending())
+                .stream()
+                .map(vehicleEagerMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
