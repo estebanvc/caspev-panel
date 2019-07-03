@@ -3,7 +3,6 @@ package com.caspev.panel.controller;
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
 import com.caspev.panel.service.NfcCardService;
 import com.caspev.panel.service.dto.NfcCardDTO;
-import com.caspev.panel.service.mapper.NfcCardMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

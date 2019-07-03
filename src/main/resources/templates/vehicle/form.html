@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Vehículo</title>
+    <title th:text="#{vehicle}"></title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -24,16 +24,15 @@
                     </ul>
                 </div>
                 <div class="alert alert-success" role="alert"
-                     th:if="${recordUpdated}">
-                    Registro actualizado con éxito.
+                     th:if="${recordUpdated}" th:text="#{recordUpdated}">
                 </div>
                 <div class="form-group">
-                    <label for="plate">Patente</label>
+                    <label for="plate" th:text="#{plate}"></label>
                     <input class="form-control" id="plate" name="plate"
                            th:field="*{plate}" type="text">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Aceptar</button>
+                    <button class="btn btn-primary" type="submit" th:text="#{submit}"></button>
                 </div>
             </form>
         </div>

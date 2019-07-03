@@ -65,6 +65,10 @@ public class EmailAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Authentication failed");
         }
 
+        if (!user.getActivated()) {
+            throw new UserNotActivatedException("User " + username + " was not activated");
+        }
+
         List<GrantedAuthority> grantedAuthorities = user.getRoles()
                 .stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))

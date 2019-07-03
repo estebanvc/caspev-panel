@@ -1,6 +1,8 @@
 package com.caspev.panel.service;
 
+import com.caspev.panel.domain.Role;
 import com.caspev.panel.domain.User;
+import com.caspev.panel.repository.RoleRepository;
 import com.caspev.panel.repository.UserRepository;
 import com.caspev.panel.security.SecurityUtils;
 import com.caspev.panel.service.dto.UserDTO;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -28,13 +31,16 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final RoleRepository roleRepository;
+
     private final UserMapper userMapper;
 
     private final UserRepository userRepository;
 
-    public UserService(PasswordEncoder passwordEncoder, UserMapper userMapper,
-                       UserRepository userRepository) {
+    public UserService(PasswordEncoder passwordEncoder, RoleRepository roleRepository,
+                       UserMapper userMapper, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository  = roleRepository;
         this.userMapper      = userMapper;
         this.userRepository  = userRepository;
     }
@@ -50,10 +56,8 @@ public class UserService {
         User user = userMapper.toEntity(userDTO);
         user.setEmail(userDTO.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode(password));
+        user.setActivated(false);
 
-        // Only admin can set roles to new users
-
-        /*
         Set<Role> roles = userDTO.getRoles()
                 .stream()
                 .map(roleRepository::findByName)
@@ -62,7 +66,6 @@ public class UserService {
                 .collect(Collectors.toSet());
 
         user.setRoles(roles);
-        */
 
         user = userRepository.save(user);
         return userMapper.toDto(user);

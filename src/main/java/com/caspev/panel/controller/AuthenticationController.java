@@ -76,7 +76,7 @@ public class AuthenticationController {
                 userDTO.setLevelAccess(0);
                 userDTO.addRole(RolesConstants.ADMIN);
                 userService.register(userDTO, signUpUserModel.getPassword());
-                return "redirect:/vehicles";
+                return "authentication/signup-success";
             }
 
         }

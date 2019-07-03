@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Vehículos</title>
+    <title th:text="#{vehicles}"></title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -15,19 +15,18 @@
                    aria-pressed="true">
                     <i class="fa fa-plus fa-fw"
                        aria-hidden="true"></i>
-                    <span>Añadir vehículo</span>
+                    <span th:text="#{addNew}"></span>
                 </a>
             </div>
-            <div  class="alert alert-warning" role="alert"
-                  th:if="${vehicleDTOList.size() < 1}">
-                No se ha añadido ningún vehículo
+            <div class="alert alert-warning" role="alert"
+                 th:if="${vehicleDTOList.size() < 1}" th:text="#{noRecordFound}">
             </div>
             <div class="table-responsive" th:if="${vehicleDTOList.size() > 0}">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Patente</th>
-                        <th>Acción</th>
+                        <th th:text="#{plate}"></th>
+                        <th th:text="#{action}"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,7 +39,8 @@
                                        class="btn btn-outline-primary" role="button"
                                        aria-pressed="true">
                                         <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i> Ver / Actualizar
+                                           aria-hidden="true"></i>
+                                        <span th:text="#{viewDetails}"></span>
                                     </a>
                                 </div>
                                 <div class="col-6">
@@ -48,7 +48,8 @@
                                        class="btn btn-outline-secondary" role="button"
                                        aria-pressed="true">
                                         <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i> Eliminar
+                                           aria-hidden="true"></i>
+                                        <span th:text="#{delete}"></span>
                                     </a>
                                 </div>
                             </div>
