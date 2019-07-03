@@ -29,4 +29,8 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('.confirmation').on('click', function () {
+        return confirm('Está seguro que desea eliminar este registro?');
+    });
 });
