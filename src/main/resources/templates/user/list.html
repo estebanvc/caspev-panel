@@ -45,10 +45,10 @@
                         <td>
                             <div class="btn-group" role="group">
                                 <a class="btn btn-secondary"
-                                   th:href="${'/nfc-cards/' + userDTO.getUuid()}"
+                                   th:href="${'/users/' + userDTO.getUuid()}"
                                    th:text="#{viewDetails}"></a>
                                 <a class="btn btn-warning"
-                                   th:href="${'/nfc-cards/' + userDTO.getUuid() + '/delete'}"
+                                   th:href="${'/users/' + userDTO.getUuid() + '/delete'}"
                                    th:text="#{delete}"></a>
                             </div>
                         </td>
