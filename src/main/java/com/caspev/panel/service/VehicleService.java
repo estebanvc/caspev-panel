@@ -23,10 +23,8 @@ import java.util.stream.Collectors;
 public class VehicleService {
 
     private final Logger log = LoggerFactory.getLogger(VehicleService.class);
-
-    private final VehicleRepository vehicleRepository;
-
     private final VehicleMapper vehicleMapper;
+    private final VehicleRepository vehicleRepository;
 
     public VehicleService(VehicleRepository vehicleRepository, VehicleMapper vehicleMapper) {
         this.vehicleRepository = vehicleRepository;

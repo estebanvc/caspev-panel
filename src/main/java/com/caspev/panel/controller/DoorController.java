@@ -22,9 +22,8 @@ import java.util.List;
 @Controller
 public class DoorController {
 
-    private final Logger log = LoggerFactory.getLogger(DoorController.class);
-
     private final DoorService doorService;
+    private final Logger log = LoggerFactory.getLogger(DoorController.class);
 
     public DoorController(DoorService doorService) {
         this.doorService = doorService;

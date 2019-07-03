@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class NfcCardService {
 
-    private final Logger log = LoggerFactory.getLogger(NfcCardService.class);
-    private final NfcCardMapper nfcCardMapper;
+    private final Logger            log = LoggerFactory.getLogger(NfcCardService.class);
+    private final NfcCardMapper     nfcCardMapper;
     private final NfcCardRepository nfcCardRepository;
 
     public NfcCardService(NfcCardRepository nfcCardRepository, NfcCardMapper nfcCardMapper) {

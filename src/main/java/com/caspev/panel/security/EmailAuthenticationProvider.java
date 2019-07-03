@@ -21,7 +21,7 @@ public class EmailAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final UserRepository  userRepository;
+    private final UserRepository userRepository;
 
     public EmailAuthenticationProvider(PasswordEncoder passwordEncoder,
                                        UserRepository userRepository) {

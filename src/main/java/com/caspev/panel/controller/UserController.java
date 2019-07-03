@@ -1,6 +1,7 @@
 package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.errors.ResourceNotFoundException;
+import com.caspev.panel.security.RolesConstants;
 import com.caspev.panel.service.UserService;
 import com.caspev.panel.service.dto.UserDTO;
 import org.slf4j.Logger;
@@ -59,8 +60,17 @@ public class UserController {
                                 "El usuario ya existe"
                         )
                 );
+            } else if (userService.findOneByRut(userDTO.getRut()).isPresent()) {
+                bindingResult.addError(
+                        new FieldError(
+                                "userDTO",
+                                "rut",
+                                "El usuario ya existe"
+                        )
+                );
             } else {
                 userDTO.setEmail(userDTO.getEmail().toLowerCase());
+                userDTO.addRole(RolesConstants.USER);
                 userService.save(userDTO);
                 return "redirect:/users";
             }

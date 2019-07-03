@@ -1,7 +1,6 @@
 package com.caspev.panel.controller;
 
 import com.caspev.panel.controller.model.SignUpUserModel;
-import com.caspev.panel.security.RolesConstants;
 import com.caspev.panel.service.UserService;
 import com.caspev.panel.service.dto.UserDTO;
 import org.slf4j.Logger;
@@ -74,7 +73,7 @@ public class AuthenticationController {
                 userDTO.setFirstName(signUpUserModel.getFirstName());
                 userDTO.setLastName(signUpUserModel.getLastName());
                 userDTO.setLevelAccess(3);
-                userDTO.addRole(RolesConstants.ADMIN);
+                userDTO.setActivated(false);
                 userService.register(userDTO, signUpUserModel.getPassword());
                 return "authentication/signup-success";
             }

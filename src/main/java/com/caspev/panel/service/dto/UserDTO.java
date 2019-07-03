@@ -42,8 +42,7 @@ public class UserDTO implements Serializable {
     @NotNull
     private Integer levelAccess;
 
-    @NotNull
-    private Boolean activated;
+    private Boolean activated = false;
 
     private Set<String> roles = new HashSet<>();
 

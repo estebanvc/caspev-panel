@@ -4,6 +4,7 @@ import com.caspev.panel.domain.Role;
 import com.caspev.panel.domain.User;
 import com.caspev.panel.repository.RoleRepository;
 import com.caspev.panel.repository.UserRepository;
+import com.caspev.panel.security.RolesConstants;
 import com.caspev.panel.security.SecurityUtils;
 import com.caspev.panel.service.dto.UserDTO;
 import com.caspev.panel.service.mapper.UserMapper;
@@ -14,10 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,15 +54,9 @@ public class UserService {
         User user = userMapper.toEntity(userDTO);
         user.setEmail(userDTO.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode(password));
-        user.setActivated(false);
 
-        Set<Role> roles = userDTO.getRoles()
-                .stream()
-                .map(roleRepository::findByName)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-
+        Set<Role> roles = new HashSet<>();
+        roleRepository.findByName(RolesConstants.ADMIN).ifPresent(roles::add);
         user.setRoles(roles);
 
         user = userRepository.save(user);
@@ -80,6 +72,12 @@ public class UserService {
     public UserDTO save(UserDTO userDTO) {
         log.debug("Request to save User : {}", userDTO);
         User user = userMapper.toEntity(userDTO);
+        user.setEmail(userDTO.getEmail().toLowerCase());
+
+        Set<Role> roles = new HashSet<>();
+        roleRepository.findByName(RolesConstants.USER).ifPresent(roles::add);
+        user.setRoles(roles);
+
         user = userRepository.save(user);
         return userMapper.toDto(user);
     }
@@ -134,6 +132,19 @@ public class UserService {
     public Optional<UserDTO> findOneByEmail(String email) {
         log.debug("Request to get User : {}", email);
         return userRepository.findByEmailIgnoreCase(email)
+                .map(userMapper::toDto);
+    }
+
+    /**
+     * Get one user by rut.
+     *
+     * @param rut the rut of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Optional<UserDTO> findOneByRut(String rut) {
+        log.debug("Request to get User : {}", rut);
+        return userRepository.findByRut(rut)
                 .map(userMapper::toDto);
     }
 

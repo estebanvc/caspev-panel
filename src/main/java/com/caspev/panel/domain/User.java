@@ -46,9 +46,8 @@ public class User extends AuditingEntity implements Serializable {
     private String email;
 
     @JsonIgnore
-    @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash", length = 60, nullable = false)
+    @Column(name = "password_hash", length = 60)
     private String password;
 
     @Size(max = 50)
@@ -64,7 +63,7 @@ public class User extends AuditingEntity implements Serializable {
     private Integer levelAccess;
 
     @NotNull
-    @Column(name = "activated" , nullable = false)
+    @Column(name = "activated", nullable = false)
     private Boolean activated;
 
     @JsonIgnore
