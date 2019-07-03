@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Usuarios</title>
+    <title th:text="#{users}"></title>
 </head>
 <body>
 <section layout:fragment="content">
@@ -15,47 +15,41 @@
                    aria-pressed="true">
                     <i class="fa fa-plus fa-fw"
                        aria-hidden="true"></i>
-                    <span>Añadir usuario</span>
+                    <span th:text="#{addNew}"></span>
                 </a>
             </div>
-            <div class="table-responsive">
+            <div class="alert alert-warning" role="alert"
+                 th:if="${userDTOList.size() < 1}" th:text="#{noRecordFound}">
+            </div>
+            <div class="table-responsive" th:if="${userDTOList.size() > 0}">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>RUT</th>
-                        <th>Email</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Nivel de acceso</th>
-                        <th>Acción</th>
+                        <th th:text="#{rut}"></th>
+                        <th th:text="#{email}"></th>
+                        <th th:text="#{firstName}"></th>
+                        <th th:text="#{lastName}"></th>
+                        <th th:text="#{levelAccess}"></th>
+                        <th th:text="#{roles}"></th>
+                        <th th:text="#{action}"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="user : ${userList}">
-                        <td th:text="${user.getRut()}"></td>
-                        <td th:text="${user.getEmail}"></td>
-                        <td th:text="${user.getFirstName()}"></td>
-                        <td th:text="${user.getLastName()}"></td>
-                        <td th:text="${user.getLevelAccess()}"></td>
+                    <tr th:each="userDTO : ${userDTOList}">
+                        <td th:text="${userDTO.getRut()}"></td>
+                        <td th:text="${userDTO.getEmail()}"></td>
+                        <td th:text="${userDTO.getFirstName()}"></td>
+                        <td th:text="${userDTO.getLastName()}"></td>
+                        <td th:text="${userDTO.getLevelAccess()}"></td>
+                        <td th:text="${userDTO.getRoles()}"></td>
                         <td>
-                            <div class="row m-0 p-0">
-                                <div class="col-6">
-                                    <a th:href="${'/nfc-cards/' + user.getUuid()}"
-                                       class="btn btn-outline-primary" role="button"
-                                       aria-pressed="true">
-                                        <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i> Ver / Actualizar
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a
-                                            th:href="${'/nfc-cards/' + user.getUuid() + '/delete'}"
-                                       class="btn btn-outline-secondary" role="button"
-                                       aria-pressed="true">
-                                        <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i> Eliminar
-                                    </a>
-                                </div>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-secondary"
+                                   th:href="${'/nfc-cards/' + userDTO.getUuid()}"
+                                   th:text="#{viewDetails}"></a>
+                                <a class="btn btn-warning"
+                                   th:href="${'/nfc-cards/' + userDTO.getUuid() + '/delete'}"
+                                   th:text="#{delete}"></a>
                             </div>
                         </td>
                     </tr>
@@ -63,6 +57,7 @@
                 </table>
             </div>
         </div>
+    </div>
 </section>
 </body>
 </html>

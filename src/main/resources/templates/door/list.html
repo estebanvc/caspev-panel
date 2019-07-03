@@ -35,25 +35,13 @@
                         <td th:text="${doorDTO.getName()}"></td>
                         <td th:text="${doorDTO.getLevelAccess()}"></td>
                         <td>
-                            <div class="row m-0 p-0">
-                                <div class="col-6">
-                                    <a th:href="${'/doors/' + doorDTO.getUuid()}"
-                                       class="btn btn-outline-primary" role="button"
-                                       aria-pressed="true">
-                                        <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i>
-                                        <span th:text="#{viewDetails}"></span>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a th:href="${'/doors/' + doorDTO.getUuid() + '/delete'}"
-                                       class="btn btn-outline-secondary" role="button"
-                                       aria-pressed="true">
-                                        <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i>
-                                        <span th:text="#{delete}"></span>
-                                    </a>
-                                </div>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-secondary"
+                                   th:href="${'/doors/' + doorDTO.getUuid()}"
+                                   th:text="#{viewDetails}"></a>
+                                <a class="btn btn-warning"
+                                   th:href="${'/doors/' + doorDTO.getUuid() + '/delete'}"
+                                   th:text="#{delete}"></a>
                             </div>
                         </td>
                     </tr>

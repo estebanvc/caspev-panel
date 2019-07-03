@@ -73,7 +73,7 @@ public class AuthenticationController {
                 userDTO.setEmail(signUpUserModel.getEmail());
                 userDTO.setFirstName(signUpUserModel.getFirstName());
                 userDTO.setLastName(signUpUserModel.getLastName());
-                userDTO.setLevelAccess(0);
+                userDTO.setLevelAccess(3);
                 userDTO.addRole(RolesConstants.ADMIN);
                 userService.register(userDTO, signUpUserModel.getPassword());
                 return "authentication/signup-success";

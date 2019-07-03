@@ -33,25 +33,13 @@
                     <tr th:each="nfcCardDTO : ${nfcCardDTOList}">
                         <td th:text="${nfcCardDTO.getCode()}"></td>
                         <td>
-                            <div class="row m-0 p-0">
-                                <div class="col-6">
-                                    <a th:href="${'/nfc-cards/' + nfcCardDTO.getUuid()}"
-                                       class="btn btn-outline-primary" role="button"
-                                       aria-pressed="true">
-                                        <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i>
-                                        <span th:text="#{viewDetails}"></span>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a th:href="${'/nfc-cards/' + nfcCardDTO.getUuid() + '/delete'}"
-                                       class="btn btn-outline-secondary" role="button"
-                                       aria-pressed="true">
-                                        <i class="fa fa-pencil-square-o fa-fw"
-                                           aria-hidden="true"></i>
-                                        <span th:text="#{delete}"></span>
-                                    </a>
-                                </div>
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-secondary"
+                                   th:href="${'/nfc-cards/' + nfcCardDTO.getUuid()}"
+                                   th:text="#{viewDetails}"></a>
+                                <a class="btn btn-warning"
+                                   th:href="${'/nfc-cards/' + nfcCardDTO.getUuid() + '/delete'}"
+                                   th:text="#{delete}"></a>
                             </div>
                         </td>
                     </tr>
