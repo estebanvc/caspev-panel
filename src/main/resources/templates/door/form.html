@@ -10,42 +10,51 @@
 <section layout:fragment="content">
     <div class="container">
         <div class="mx-auto pt-md-5 pt-3">
-            <form id="door" method="post" name="door"
-                  th:action="${formAction}"
-                  th:object="${doorDTO}">
-                <div class="alert alert-danger small"
-                     th:if="${#fields.hasErrors('*')}">
-                    <ul class="list-unstyled m-0">
-                        <li th:each="e : ${#fields.detailedErrors()}">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-header" th:text="#{door}"></div>
+                        <div class="card-body">
+                            <form id="door" method="post" name="door"
+                                  th:action="${formAction}"
+                                  th:object="${doorDTO}">
+                                <div class="alert alert-danger small"
+                                     th:if="${#fields.hasErrors('*')}">
+                                    <ul class="list-unstyled m-0">
+                                        <li th:each="e : ${#fields.detailedErrors()}">
                             <span class="font-weight-bolder"
                                   th:text="#{${e.fieldName}}"></span>:
-                            <span th:text="${e.message} + '.'"></span>
-                        </li>
-                    </ul>
+                                            <span th:text="${e.message} + '.'"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="alert alert-success" role="alert"
+                                     th:if="${recordUpdated}" th:text="#{recordUpdated}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" th:text="#{name}"></label>
+                                    <input class="form-control" id="name" name="name"
+                                           th:field="*{name}" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="levelAccess" th:text="#{levelAccess}"></label>
+                                    <select class="form-control" id="levelAccess" name="levelAccess"
+                                            th:field="*{levelAccess}">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" th:text="#{submit}"
+                                            type="submit"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="alert alert-success" role="alert"
-                     th:if="${recordUpdated}" th:text="#{recordUpdated}">
-                </div>
-                <div class="form-group">
-                    <label for="name" th:text="#{name}"></label>
-                    <input class="form-control" id="name" name="name"
-                           th:field="*{name}" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="levelAccess" th:text="#{levelAccess}"></label>
-                    <select class="form-control" id="levelAccess" name="levelAccess"
-                            th:field="*{levelAccess}">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" th:text="#{submit}"
-                            type="submit"></button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>
